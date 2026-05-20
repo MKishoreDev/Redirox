@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 - Link Not Found | Routify</title>
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='routify.png') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="app">
+        <header class="navbar">
+            <div class="navbar-content">
+                <a href="{{ url_for('home') }}" class="logo-link" style="text-decoration: none;">
+                    <img src="{{ url_for('static', filename='routify.png') }}" alt="Routify Logo" class="logo-img">
+                    <span class="logo-text">Routify</span>
+                </a>
+                <button class="theme-btn" id="themeToggle" title="Toggle theme">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </div>
+        </header>
+
+        <main class="content" style="display: flex; align-items: center; justify-content: center; flex: 1;">
+            <div class="error-container">
+                <div class="error-content">
+                    <div class="error-icon">
+                        <i class="fas fa-triangle-exclamation"></i>
+                    </div>
+                    <h1 class="error-title">Link Not Found</h1>
+                    <p class="error-code">404</p>
+                    <p class="error-message">
+                        The short link you're looking for doesn't exist, has expired, or is no longer available.
+                    </p>
+                    <div class="error-reasons">
+                        <h3>This could happen because:</h3>
+                        <ul>
+                            <li><i class="fas fa-clock"></i> The link has expired</li>
+                            <li><i class="fas fa-trash"></i> The link was deleted</li>
+                            <li><i class="fas fa-keyboard"></i> The URL might be incorrect</li>
+                            <li><i class="fas fa-ban"></i> Access to this link has been disabled</li>
+                        </ul>
+                    </div>
+                    <div class="error-actions">
+                        <a href="{{ url_for('home') }}" class="btn btn-primary">
+                            <i class="fas fa-home"></i> Back to Home
+                        </a>
+                        <a href="{{ url_for('home') }}#form" class="btn btn-secondary">
+                            <i class="fas fa-plus"></i> Create a New Link
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <div class="footer-inner">
+                <div class="footer-left">
+                    <p>Created by <strong>Kishore</strong></p>
+                    <p class="footer-tagline">Making URL sharing simple, secure, and smart</p>
+                </div>
+                <div class="footer-center">
+                    <a href="https://github.com/MKishoreDev/Routify" target="_blank" class="footer-link">
+                        <i class="fab fa-github"></i> GitHub
+                    </a>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        const themeToggle = document.getElementById('themeToggle');
+        const savedTheme = localStorage.getItem('theme') || 'light';
+
+        function initTheme() {
+            if (savedTheme === 'dark') {
+                document.documentElement.setAttribute('data-theme', 'dark');
+            }
+            updateThemeIcon();
+        }
+
+        function updateThemeIcon() {
+            const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+            themeToggle.innerHTML = isDark ? '<i class="fas fa-sun" style="color: inherit;"></i>' : '<i class="fas fa-moon" style="color: inherit;"></i>';
+        }
+
+        function toggleTheme() {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+
+            if (newTheme === 'dark') {
+                document.documentElement.setAttribute('data-theme', 'dark');
+            } else {
+                document.documentElement.removeAttribute('data-theme');
+            }
+
+            updateThemeIcon();
+            localStorage.setItem('theme', newTheme);
+        }
+
+        themeToggle.addEventListener('click', toggleTheme);
+        initTheme();
+    </script>
+
+    <style>
+        .error-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            max-width: 600px;
+            width: 100%;
+            text-align: center;
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        .error-content {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            width: 100%;
+        }
+
+        .error-icon {
+            font-size: 4rem;
+            color: var(--error);
+            margin-bottom: 1rem;
+        }
+
+        .error-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--text-primary);
+            line-height: 1.2;
+        }
+
+        .error-code {
+            font-size: 3rem;
+            font-weight: 900;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin: 0;
+        }
+
+        .error-message {
+            font-size: 1.125rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .error-reasons {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-light);
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+
+        .error-reasons h3 {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .error-reasons ul {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .error-reasons li {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        .error-reasons i {
+            color: var(--warning);
+            min-width: 20px;
+        }
+
+        .error-actions {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .error-actions a {
+            text-decoration: none;
+            flex: 1;
+            min-width: 200px;
+        }
+
+
+
+        @media (max-width: 768px) {
+            .error-title {
+                font-size: 2rem;
+            }
+
+            .error-code {
+                font-size: 2.5rem;
+            }
+
+            .error-actions a {
+                flex: 1 1 100%;
+            }
+        }
+    </style>
+</body>
+</html>

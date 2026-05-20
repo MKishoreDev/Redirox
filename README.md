@@ -1,8 +1,8 @@
 <div align="center">
 
-<img src="routly.png" alt="Routly Logo" width="180"/>
+<img src="routify.png" alt="Routify Logo" width="180"/>
 
-# 🚀 Routly
+# 🚀 Routify
 
 ### Smart Links. Clean Routes.
 
@@ -30,13 +30,13 @@ I always wondered:
 
 > *"Is creating a URL shortener actually simple?"*
 
-So I started building **Routly** with one goal in mind:
+So I started building **Routify** with one goal in mind:
 
 > Keep it lightweight, modern, and clean.
 
-Instead of turning it into a bloated platform filled with unnecessary complexity, Routly focuses on delivering a fast and minimal experience while still supporting useful features.
+Instead of turning it into a bloated platform filled with unnecessary complexity, Routify focuses on delivering a fast and minimal experience while still supporting useful features.
 
-🚧 Routly is currently an active work in progress.
+🚧 Routify is currently an active work in progress.
 
 ---
 
@@ -66,11 +66,11 @@ Instead of turning it into a bloated platform filled with unnecessary complexity
 
 # 🎯 Philosophy
 
-Routly focuses on simplicity.
+Routify focuses on simplicity.
 
 The goal was never to create a feature-heavy platform overloaded with dashboards, forced accounts, and unnecessary friction.
 
-Instead, Routly aims to provide:
+Instead, Routify aims to provide:
 
 - ✨ Clean UI
 - ⚡ Fast experience
@@ -82,7 +82,7 @@ Instead, Routly aims to provide:
 
 # 🌍 Open Source
 
-Routly is fully open source and contributions are always welcome.
+Routify is fully open source and contributions are always welcome.
 
 Whether it's:
 
@@ -115,7 +115,7 @@ Some ideas planned for future versions:
 - 🤖 Automatic expired-link cleanup
 - 🔌 API support
 - 🎨 More customization
-- 📦 Python package for Routly
+- 📦 Python package for Routify
 
 A few years ago I also created a Python package called [AutoPostTelegram](https://pypi.org/project/AutoPostTelegram/), although it is currently no longer maintained.
 
@@ -131,7 +131,7 @@ A few years ago I also created a Python package called [AutoPostTelegram](https:
 
 Contributions, ideas, and feedback are welcome.
 
-If you'd like to improve Routly, feel free to fork the repository and submit a pull request.
+If you'd like to improve Routify, feel free to fork the repository and submit a pull request.
 
 ---
 

@@ -1,0 +1,6 @@
+flask
+pymongo[srv]
+qrcode
+pillow
+gunicorn
+werkzeug
