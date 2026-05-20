@@ -2,66 +2,147 @@
 
 <img src="routly.png" alt="Routly Logo" width="180"/>
 
-# Routly
+# 🚀 Routly
 
 ### Smart Links. Clean Routes.
 
-Minimal open-source URL shortener built with FastAPI and MongoDB.
+Minimal, modern, open-source URL shortener built with FastAPI and MongoDB.
+
+<p align="center">
+  <a href="#">
+    <img src="https://img.shields.io/badge/Status-Active-success?style=for-the-badge"/>
+  </a>
+  <a href="#">
+    <img src="https://img.shields.io/badge/Open%20Source-Yes-blue?style=for-the-badge"/>
+  </a>
+  <a href="#">
+    <img src="https://img.shields.io/badge/Made%20With-FastAPI-009688?style=for-the-badge"/>
+  </a>
+</p>
 
 </div>
 
 ---
 
-## About
+# ✨ About
 
 I always wondered:
 
-> "Isn't creating a URL shortener actually simple?"
+> *"Is creating a URL shortener actually simple?"*
 
-So I started building one myself while keeping the experience lightweight, minimal, and clean instead of overloading it with unnecessary features.
+So I started building **Routly** with one goal in mind:
 
-> 🚧 Routly is currently an ongoing project.
+> Keep it lightweight, modern, and clean.
 
----
+Instead of turning it into a bloated platform filled with unnecessary complexity, Routly focuses on delivering a fast and minimal experience while still supporting useful features.
 
-## Features
-
-- Short link generation
-- Password-protected links
-- Expiration dates
-- QR code generation
-- Easy copy & sharing
-- Minimal and modern interface
-- Fast redirects
+🚧 Routly is currently an active work in progress.
 
 ---
 
-## Tech Stack
+# ⚡ Features
 
-- FastAPI
-- MongoDB
-- HTML / CSS / JavaScript
+- 🔗 Short link generation
+- ✏️ Custom short URLs
+- 🔒 Password-protected links
+- ⏳ Expiration dates
+- 📱 QR code generation
+- 📋 Easy copy & sharing
+- ⚡ Fast redirects
+- 🎨 Clean and modern UI
+- 🌙 Minimal user experience
 
 ---
 
-## Philosophy
+# 🛠️ Tech Stack
+
+<div align="center">
+
+<img src="https://skillicons.dev/icons?i=fastapi,mongodb,html,css,js,python" />
+
+</div>
+
+---
+
+# 🎯 Philosophy
 
 Routly focuses on simplicity.
 
-The goal was never to create a feature-heavy platform, but a clean and modern link shortener that does the essentials well.
+The goal was never to create a feature-heavy platform overloaded with dashboards, forced accounts, and unnecessary friction.
+
+Instead, Routly aims to provide:
+
+- ✨ Clean UI
+- ⚡ Fast experience
+- 🧩 Simple workflows
+- 🎨 Modern aesthetics
+- 🔗 Essential functionality
 
 ---
 
-## Future Plans
+# 🌍 Open Source
 
-I'm also thinking about creating a Python package for Routly in the future.
+Routly is fully open source and contributions are always welcome.
 
-A few years ago I created a Python package called [AutoPostTelegram](https://pypi.org/project/AutoPostTelegram/), although it is currently no longer maintained.
+Whether it's:
+
+- 🐛 Fixing bugs
+- 🎨 Improving UI
+- 💡 Suggesting features
+- ⚡ Optimizing performance
+- 📖 Improving documentation
+
+feel free to open issues or submit pull requests.
 
 ---
 
-## Status
+# 🧪 Current Limitations
 
-Project is actively being built and improved.
+A few things are intentionally kept simple for now:
+
+- ⏳ Expired links are deleted only when accessed instead of using an automatic cleanup scheduler.
+- 📊 Advanced analytics and account systems are not implemented yet to keep the project lightweight.
+
+These may improve in future updates.
 
 ---
+
+# 🚀 Future Plans
+
+Some ideas planned for future versions:
+
+- 📈 Better analytics
+- 🤖 Automatic expired-link cleanup
+- 🔌 API support
+- 🎨 More customization
+- 📦 Python package for Routly
+
+A few years ago I also created a Python package called [AutoPostTelegram](https://pypi.org/project/AutoPostTelegram/), although it is currently no longer maintained.
+
+---
+
+# 📌 Status
+
+🟢 Project is actively being built and improved.
+
+---
+
+# 🤝 Contributing
+
+Contributions, ideas, and feedback are welcome.
+
+If you'd like to improve Routly, feel free to fork the repository and submit a pull request.
+
+---
+
+# 📄 License
+
+MIT License
+
+---
+
+<div align="center">
+
+### ❤️ Made with passion by Kishore
+
+</div>
