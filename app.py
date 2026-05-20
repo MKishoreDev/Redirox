@@ -203,7 +203,10 @@ def redirect_url(code):
                 "password.html",
                 code=code
             )
-
+    db.links.update_one(
+        {"code": code},
+        {"$inc": {"visits": 1}}
+    )
     return redirect(doc["url"])
 
 @app.errorhandler(404)
