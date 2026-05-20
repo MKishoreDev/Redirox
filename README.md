@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="logo.png" alt="Routly Logo" width="180"/>
+<img src="routly.png" alt="Routly Logo" width="180"/>
 
 # Routly
 
