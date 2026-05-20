@@ -21,7 +21,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 app = Flask(__name__)
 MONGO_URI = os.environ.get("MONGO_URI", "mongodb://localhost:27017")
 client = MongoClient(MONGO_URI)
-db = client["Routify"]
+db = client["Redirox"]
 try:
     db.links.create_index("code", unique=True)
 except Exception as e:
@@ -54,9 +54,9 @@ def generate_qr(data):
     ).decode()
     return f"data:image/png;base64,{img_str}"
 
-@app.route("/routify.png")
+@app.route("/redirox.png")
 def serve_logo():
-    return send_from_directory("static", "routify.png")
+    return send_from_directory("static", "redirox.png")
 
 @app.route("/")
 def home():

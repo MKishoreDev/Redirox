@@ -1291,7 +1291,7 @@ body {
     box-shadow: 0 8px 25px rgba(30, 136, 229, 0.35);
 }
 
-.routify-toast {
+.redirox-toast {
     position: fixed;
     bottom: 2rem;
     right: 2rem;
@@ -1315,18 +1315,18 @@ body {
     transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s ease;
 }
 
-.routify-toast.visible {
+.redirox-toast.visible {
     transform: translateY(0);
     opacity: 1;
 }
 
-.routify-toast i {
+.redirox-toast i {
     color: var(--success);
     font-size: 1.2rem;
 }
 
 @media (max-width: 480px) {
-    .routify-toast {
+    .redirox-toast {
         left: 1rem;
         right: 1rem;
         bottom: 1rem;

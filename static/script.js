@@ -120,11 +120,11 @@ function hideError() {
 }
 
 function showToast(message) {
-    const oldToast = document.querySelector('.routify-toast');
+    const oldToast = document.querySelector('.redirox-toast');
     if (oldToast) oldToast.remove();
     
     const toast = document.createElement('div');
-    toast.className = 'routify-toast';
+    toast.className = 'redirox-toast';
     toast.innerHTML = `<i class="fas fa-check-circle"></i> ${message}`;
     document.body.appendChild(toast);
     
@@ -299,8 +299,8 @@ async function shareLink() {
     const url = shortUrlInput.value;
 
     const shareData = {
-        title: 'Shortened Link | Routify',
-        text: '⚡ Shortened with Routify – Smart, secure, lightning-fast links 🚀',
+        title: 'Shortened Link | Redirox',
+        text: '⚡ Shortened with Redirox – Smart, secure, lightning-fast links 🚀',
         url: url
     };
 
@@ -331,7 +331,7 @@ function downloadQrCode() {
 
     const link = document.createElement('a');
     link.href = qrCode.src;
-    link.download = 'routify_qr.png';
+    link.download = 'redirox_qr.png';
     document.body.appendChild(link);
     link.click();
     link.remove();

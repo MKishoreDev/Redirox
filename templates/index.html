@@ -3,20 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Routify - Smart URL Shortener</title>
+    <title>Redirox - Smart URL Shortener</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tuncxys-datepicker@1.0.5/dist/tuncxys-datepicker.css">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <script src="https://cdn.jsdelivr.net/npm/tuncxys-datepicker@1.0.5/dist/tuncxys-datepicker.umd.js"></script>
-    <link rel="icon" type="image/png" sizes="64x64" href="{{ url_for('static', filename='routify.png') }}">
+    <link rel="icon" type="image/png" sizes="64x64" href="{{ url_for('static', filename='redirox.png') }}">
 </head>
 <body>
     <div class="app">
         <header class="navbar">
             <div class="navbar-content">
                 <a href="{{ url_for('home') }}" class="logo-link" style="text-decoration: none;">
-                    <img src="{{ url_for('static', filename='routify.png') }}" alt="Routify Logo" class="logo-img">
-                    <span class="logo-text">Routify</span>
+                    <img src="{{ url_for('static', filename='redirox.png') }}" alt="Redirox Logo" class="logo-img">
+                    <span class="logo-text">Redirox</span>
                 </a>
                 <button class="theme-btn" id="themeToggle" title="Toggle theme">
                     <i class="fas fa-moon"></i>
@@ -185,7 +185,7 @@
             </section>
 
             <section class="features-section">
-                <h3>Why choose Routify?</h3>
+                <h3>Why choose Redirox?</h3>
                 <div class="features-grid">
                     <div class="feature-card">
                         <div class="feature-icon">
@@ -222,8 +222,8 @@
             <section class="info-section">
                 <div class="info-container">
                     <div class="info-content">
-                        <h3>About Routify</h3>
-                        <p>Routify is a minimal open-source URL shortener built with Flask and MongoDB. It supports password-protected links, expiration dates, QR code generation, and easy sharing while keeping the experience clean and lightweight.</p>
+                        <h3>About Redirox</h3>
+                        <p>Redirox is a minimal open-source URL shortener built with Flask and MongoDB. It supports password-protected links, expiration dates, QR code generation, and easy sharing while keeping the experience clean and lightweight.</p>
                         <h4>Key Capabilities</h4>
                         <ul class="info-list">
                             <li><i class="fas fa-check"></i> Create short, memorable links instantly</li>
@@ -258,7 +258,7 @@
 
             <section class="cta-section">
                 <h3>Ready to shorten your links?</h3>
-                <p>Start creating secure, shareable URLs today with Routify</p>
+                <p>Start creating secure, shareable URLs today with Redirox</p>
                 <button class="btn btn-cta" onclick="document.querySelector('.form-wrapper').scrollIntoView({ behavior: 'smooth' })">
                     <i class="fas fa-arrow-down"></i> Get Started
                 </button>
@@ -272,12 +272,12 @@
                     <p class="footer-tagline">Making URL sharing simple, secure, and smart</p>
                 </div>
                 <div class="footer-center">
-                    <a href="https://github.com/MKishoreDev/Routify" target="_blank" class="footer-link">
+                    <a href="https://github.com/MKishoreDev/Redirox" target="_blank" class="footer-link">
                         <i class="fab fa-github"></i> GitHub Repository
                     </a>
                 </div>
                 <div class="footer-right">
-                    <p>&copy; 2026 Routify. All rights reserved.</p>
+                    <p>&copy; 2026 Redirox. All rights reserved.</p>
                 </div>
             </div>
         </footer>
