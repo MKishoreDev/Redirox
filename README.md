@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="redirox.png" alt="Redirox Logo" width="180"/>
+<img src="static/redirox.png" alt="Redirox Logo" width="180"/>
 
 # 🚀 Redirox
 
