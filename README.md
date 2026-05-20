@@ -12,17 +12,21 @@ Minimal, modern, open-source URL shortener built with FastAPI and MongoDB.
   <a href="#">
     <img src="https://img.shields.io/badge/Status-Active-success?style=for-the-badge"/>
   </a>
+
+  <a href="https://redirox.vercel.app/">
+    <img src="https://img.shields.io/badge/Live-Demo-brightgreen?style=for-the-badge"/>
+  </a>
+
   <a href="#">
     <img src="https://img.shields.io/badge/Open%20Source-Yes-blue?style=for-the-badge"/>
   </a>
+
   <a href="#">
     <img src="https://img.shields.io/badge/Made%20With-FastAPI-009688?style=for-the-badge"/>
   </a>
 </p>
 
 </div>
-
----
 
 # ✨ About
 
@@ -42,15 +46,15 @@ Instead of turning it into a bloated platform filled with unnecessary complexity
 
 # ⚡ Features
 
-- 🔗 Short link generation
-- ✏️ Custom short URLs
-- 🔒 Password-protected links
-- ⏳ Expiration dates
-- 📱 QR code generation
-- 📋 Easy copy & sharing
-- ⚡ Fast redirects
-- 🎨 Clean and modern UI
-- 🌙 Minimal user experience
+- 🔗 Short link generation  
+- ✏️ Custom short URLs  
+- 🔒 Password-protected links  
+- ⏳ Expiration dates  
+- 📱 QR code generation  
+- 📋 Easy copy & sharing  
+- ⚡ Fast redirects  
+- 🎨 Clean and modern UI  
+- 🌙 Minimal user experience  
 
 ---
 
@@ -72,11 +76,11 @@ The goal was never to create a feature-heavy platform overloaded with dashboards
 
 Instead, Redirox aims to provide:
 
-- ✨ Clean UI
-- ⚡ Fast experience
-- 🧩 Simple workflows
-- 🎨 Modern aesthetics
-- 🔗 Essential functionality
+- ✨ Clean UI  
+- ⚡ Fast experience  
+- 🧩 Simple workflows  
+- 🎨 Modern aesthetics  
+- 🔗 Essential functionality  
 
 ---
 
@@ -86,11 +90,11 @@ Redirox is fully open source and contributions are always welcome.
 
 Whether it's:
 
-- 🐛 Fixing bugs
-- 🎨 Improving UI
-- 💡 Suggesting features
-- ⚡ Optimizing performance
-- 📖 Improving documentation
+- 🐛 Fixing bugs  
+- 🎨 Improving UI  
+- 💡 Suggesting features  
+- ⚡ Optimizing performance  
+- 📖 Improving documentation  
 
 feel free to open issues or submit pull requests.
 
@@ -100,8 +104,8 @@ feel free to open issues or submit pull requests.
 
 A few things are intentionally kept simple for now:
 
-- ⏳ Expired links are deleted only when accessed instead of using an automatic cleanup scheduler.
-- 📊 Advanced analytics and account systems are not implemented yet to keep the project lightweight.
+- ⏳ Expired links are deleted only when accessed instead of using an automatic cleanup scheduler.  
+- 📊 Advanced analytics and account systems are not implemented yet to keep the project lightweight.  
 
 These may improve in future updates.
 
@@ -111,11 +115,11 @@ These may improve in future updates.
 
 Some ideas planned for future versions:
 
-- 📈 Better analytics
-- 🤖 Automatic expired-link cleanup
-- 🔌 API support
-- 🎨 More customization
-- 📦 Python package for Redirox
+- 📈 Better analytics  
+- 🤖 Automatic expired-link cleanup  
+- 🔌 API support  
+- 🎨 More customization  
+- 📦 Python package for Redirox  
 
 A few years ago I also created a Python package called [AutoPostTelegram](https://pypi.org/project/AutoPostTelegram/), although it is currently no longer maintained.
 
