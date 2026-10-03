@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python SDK Documentation | Redirox</title>
+    <meta name="description" content="Official Redirox Python SDK documentation: install the package, shorten links, add passwords and expiration, generate QR codes, and look up link information.">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://redirox.pages.dev/static/redirox-og.png">
+    <meta name="twitter:image" content="https://redirox.pages.dev/static/redirox-og.png">
+    <meta property="og:title" content="Python SDK Documentation | Redirox">
+    <meta property="og:description" content="Integrate Redirox into Python apps, scripts and Telegram bots with the official SDK.">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Python SDK Documentation | Redirox">
+    <meta name="twitter:description" content="Integrate Redirox into Python apps, scripts and Telegram bots with the official SDK.">
+    <link rel="icon" type="image/png" href="/static/redirox.png">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css" crossorigin="anonymous">
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="/static/docs.css">
+</head>
+<body><div class="app"><header class="navbar"><div class="navbar-content"><a href="/" class="logo-link" target="_top" style="text-decoration:none"><img src="/static/redirox.png" alt="Redirox Logo" class="logo-img"><span class="logo-text">Redirox</span></a><div style="display:flex;align-items:center;gap:12px"><a href="/" class="footer-link" target="_top" style="text-decoration:none"><i class="fas fa-arrow-left"></i> Main page</a><button class="theme-btn" id="themeToggle" type="button" title="Toggle theme" aria-label="Toggle theme"><i class="fas fa-moon"></i></button></div></div></header><div class="docs-shell"><aside class="docs-nav" aria-label="Documentation sections"><div class="docs-nav-title">Python SDK</div><a href="#getting-started">Getting started</a><a href="#installation">Installation</a><a href="#quick-start">Quick start</a><a href="#configuration">Configuration</a><a href="#shorten">Shorten links</a><a href="#password">Password protection</a><a href="#expiration">Expiration</a><a href="#qr">QR codes</a><a href="#info">Link information</a><a href="#verify">Verify password</a><a href="#telegram">Telegram bot</a><a href="#responses">Responses</a><a href="#errors">Error handling</a><a href="#resources">Resources</a></aside><main class="docs-main"><div class="docs-eyebrow"><i class="fab fa-python"></i> OFFICIAL PYTHON SDK</div><h1>Build with <span class="accent">Redirox</span></h1><p class="docs-intro">Everything you need to create smart links from Python. Install the lightweight SDK and bring short URLs, passwords, expiration, and QR codes into your workflow.</p><div class="docs-hero-actions"><a class="btn btn-primary" href="#installation"><i class="fas fa-download"></i> Get started</a><a class="btn btn-secondary" href="https://github.com/MKishoreDev/redirox-pypi" target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i> View source</a></div><section id="getting-started"><h2>Getting started</h2><p>The official Redirox Python SDK lets your scripts and applications create short links and look up existing ones. It uses the public Redirox service by default.</p><div class="docs-callout"><p><strong>Requirements:</strong> Python 3.8 or newer. No API key is required by the SDK.</p></div></section>
+<section id="installation"><h2>Installation</h2><p>Install the package from PyPI:</p><div class="docs-code"><div class="docs-code-head"><span>Terminal</span><button class="docs-copy" type="button" aria-label="Copy Terminal code"><i class="fas fa-copy"></i> Copy</button></div><pre><code>pip install redirox</code></pre></div><p>For the optional Telegram bot example below, install Pyrogram and tgcrypto separately:</p><div class="docs-code"><div class="docs-code-head"><span>Terminal</span><button class="docs-copy" type="button" aria-label="Copy Terminal code"><i class="fas fa-copy"></i> Copy</button></div><pre><code>pip install pyrogram tgcrypto</code></pre></div></section>
+<section id="quick-start"><h2>Quick start</h2><p>Create a client, shorten a link, and read the URL from the returned dictionary.</p><div class="docs-code"><div class="docs-code-head"><span>Python</span><button class="docs-copy" type="button" aria-label="Copy Python code"><i class="fas fa-copy"></i> Copy</button></div><pre><code>from redirox import Redirox
+
+client = Redirox()
+result = client.shorten(&quot;https://example.com&quot;)
+
+print(result[&quot;short_url&quot;])</code></pre></div></section>
+<section id="configuration"><h2>Configuration</h2><p>By default, the client sends requests to <code>https://redirox.pages.dev</code> with a 15-second request timeout. Pass <code>base_url</code> if you host your own Redirox instance or customize <code>timeout</code> for your network requirements.</p><div class="docs-code"><div class="docs-code-head"><span>Python</span><button class="docs-copy" type="button" aria-label="Copy Python code"><i class="fas fa-copy"></i> Copy</button></div><pre><code>from redirox import Redirox
+
+# Custom base URL and timeout (in seconds)
+client = Redirox(
+    base_url=&quot;https://redirox.pages.dev&quot;,
+    timeout=20
+)</code></pre></div><div class="docs-table-wrap"><table class="docs-table"><thead><tr><th>Parameter</th><th>Type</th><th>Default</th><th>Description</th></tr></thead><tbody><tr><td><code>base_url</code></td><td>str</td><td><code>"https://redirox.pages.dev"</code></td><td>Base URL for the Redirox API endpoint (trailing slash removed automatically).</td></tr><tr><td><code>timeout</code></td><td>int | float</td><td><code>15</code></td><td>Request timeout duration in seconds.</td></tr></tbody></table></div></section>
+<section id="shorten"><h2>Shorten links</h2><p><code>shorten(url, password=None, expires_at=None, generate_qr=False)</code> creates a new link. The URL must start with <code>http://</code> or <code>https://</code>.</p><div class="docs-code"><div class="docs-code-head"><span>Python</span><button class="docs-copy" type="button" aria-label="Copy Python code"><i class="fas fa-copy"></i> Copy</button></div><pre><code>result = client.shorten(&quot;https://example.com/a/long/path&quot;)
+print(result[&quot;code&quot;])
+print(result[&quot;short_url&quot;])</code></pre></div><div class="docs-table-wrap"><table class="docs-table"><thead><tr><th>Argument</th><th>Type</th><th>Purpose</th></tr></thead><tbody><tr><td><code>url</code></td><td>str</td><td>Destination URL (required)</td></tr><tr><td><code>password</code></td><td>str | None</td><td>Optional link password</td></tr><tr><td><code>expires_at</code></td><td>str | None</td><td>Optional ISO-formatted expiration date and time</td></tr><tr><td><code>generate_qr</code></td><td>bool</td><td>Include a QR code as a PNG data URL</td></tr></tbody></table></div></section>
+<section id="password"><h2>Password protection</h2><p>Add a password when creating a link. Visitors must enter it before the destination opens.</p><div class="docs-code"><div class="docs-code-head"><span>Python</span><button class="docs-copy" type="button" aria-label="Copy Python code"><i class="fas fa-copy"></i> Copy</button></div><pre><code>result = client.shorten(
+    &quot;https://example.com/private&quot;,
+    password=&quot;mypassword&quot;
+)
+print(result[&quot;has_password&quot;])  # True</code></pre></div></section>
+<section id="expiration"><h2>Expiring links</h2><p>Pass an ISO-formatted future date and time as <code>expires_at</code>.</p><div class="docs-code"><div class="docs-code-head"><span>Python</span><button class="docs-copy" type="button" aria-label="Copy Python code"><i class="fas fa-copy"></i> Copy</button></div><pre><code>from datetime import datetime, timedelta, timezone
+
+expires_at = (datetime.now(timezone.utc) + timedelta(hours=1)).isoformat()
+result = client.shorten(
+    &quot;https://example.com/limited-time&quot;,
+    expires_at=expires_at
+)
+print(result[&quot;expires_at&quot;])</code></pre></div><div class="docs-callout"><p>Expired links are unavailable. Redirox checks expiration when a visitor opens the link.</p></div></section>
+<section id="qr"><h2>QR codes</h2><p>Set <code>generate_qr=True</code> to receive a base64-encoded PNG data URL in <code>qr_code</code>. It is generated when the link is created, not fetched later by <code>info()</code>.</p><div class="docs-code"><div class="docs-code-head"><span>Python</span><button class="docs-copy" type="button" aria-label="Copy Python code"><i class="fas fa-copy"></i> Copy</button></div><pre><code>import base64
+
+result = client.shorten(&quot;https://github.com&quot;, generate_qr=True)
+qr_data_url = result[&quot;qr_code&quot;]
+
+if qr_data_url:
+    image_bytes = base64.b64decode(qr_data_url.split(&quot;,&quot;, 1)[1])
+    with open(&quot;qr.png&quot;, &quot;wb&quot;) as file:
+        file.write(image_bytes)</code></pre></div></section>
+<section id="info"><h2>Link information</h2><p>Use the link’s six-character code to retrieve its destination, visit count, creation date, expiration date, and password status.</p><div class="docs-code"><div class="docs-code-head"><span>Python</span><button class="docs-copy" type="button" aria-label="Copy Python code"><i class="fas fa-copy"></i> Copy</button></div><pre><code>info = client.info(&quot;abc123&quot;)
+print(info[&quot;url&quot;])
+print(info[&quot;visits&quot;])
+print(info[&quot;has_password&quot;])</code></pre></div><p><code>info(code)</code> returns the JSON response from <code>GET /info/&lt;code&gt;</code>. It does not return the password or QR image.</p></section>
+<section id="verify"><h2>Verify password</h2><p>Validate a password against a password-protected link programmatically.</p><div class="docs-code"><div class="docs-code-head"><span>Python</span><button class="docs-copy" type="button" aria-label="Copy Python code"><i class="fas fa-copy"></i> Copy</button></div><pre><code>try:
+    check = client.verify(&quot;abc123&quot;, &quot;mypassword&quot;)
+    print(&quot;Destination URL:&quot;, check[&quot;url&quot;])
+except RediroxAuthError:
+    print(&quot;Invalid password provided!&quot;)</code></pre></div></section>
+<section id="telegram"><h2>Telegram bot example</h2><p>Use the SDK inside a Pyrogram bot to reply with a short URL. Replace the placeholders with your own Telegram credentials.</p><div class="docs-code"><div class="docs-code-head"><span>Python</span><button class="docs-copy" type="button" aria-label="Copy Python code"><i class="fas fa-copy"></i> Copy</button></div><pre><code>from pyrogram import Client, filters
+from redirox import Redirox
+
+app = Client(
+    &quot;redirox-bot&quot;,
+    api_id=12345,
+    api_hash=&quot;YOUR_API_HASH&quot;,
+    bot_token=&quot;YOUR_BOT_TOKEN&quot;
+)
+redirox = Redirox()
+
+@app.on_message(filters.text &amp; filters.private)
+async def shorten_link(_, message):
+    try:
+        result = redirox.shorten(message.text.strip())
+        await message.reply_text(result[&quot;short_url&quot;])
+    except Exception as error:
+        await message.reply_text(f&quot;Could not shorten link: {error}&quot;)
+
+app.run()</code></pre></div><p>The SDK uses synchronous HTTP requests. For high-volume async bots, run calls off the event loop.</p></section>
+<section id="responses"><h2>Responses</h2><p><code>shorten()</code> returns a dictionary with the fields below. <code>qr_code</code> is <code>None</code> unless requested; <code>expires_at</code> is <code>None</code> unless supplied.</p><div class="docs-code"><div class="docs-code-head"><span>Python</span><button class="docs-copy" type="button" aria-label="Copy Python code"><i class="fas fa-copy"></i> Copy</button></div><pre><code>{
+    &quot;code&quot;: &quot;abc123&quot;,
+    &quot;short_url&quot;: &quot;https://redirox.pages.dev/abc123&quot;,
+    &quot;url&quot;: &quot;https://example.com&quot;,
+    &quot;qr_code&quot;: None,
+    &quot;expires_at&quot;: None,
+    &quot;has_password&quot;: False
+}</code></pre></div></section>
+<section id="errors"><h2>Error handling</h2><p>The Redirox SDK provides a dedicated hierarchy of custom exceptions, allowing you to catch specific errors cleanly:</p><div class="docs-table-wrap"><table class="docs-table"><thead><tr><th>Exception</th><th>Status</th><th>Description</th></tr></thead><tbody><tr><td><code>RediroxValidationError</code></td><td>400</td><td>Raised when invalid URL or payload parameters are provided.</td></tr><tr><td><code>RediroxAuthError</code></td><td>401</td><td>Raised when an incorrect password is supplied for a link.</td></tr><tr><td><code>RediroxNotFoundError</code></td><td>404</td><td>Raised when the requested short link does not exist or has expired.</td></tr><tr><td><code>RediroxConnectionError</code></td><td>-</td><td>Raised on network failure or unreachable host.</td></tr><tr><td><code>RediroxAPIError</code></td><td>5xx</td><td>Raised on other unexpected HTTP/API errors.</td></tr><tr><td><code>RediroxError</code></td><td>-</td><td>Base class for all Redirox SDK exceptions.</td></tr></tbody></table></div><div class="docs-code"><div class="docs-code-head"><span>Python</span><button class="docs-copy" type="button" aria-label="Copy Python code"><i class="fas fa-copy"></i> Copy</button></div><pre><code>from redirox import (
+    Redirox,
+    RediroxValidationError,
+    RediroxAuthError,
+    RediroxNotFoundError,
+    RediroxConnectionError,
+    RediroxAPIError,
+)
+
+client = Redirox()
+
+try:
+    result = client.shorten(&quot;https://example.com&quot;)
+except RediroxValidationError as e:
+    print(&quot;Validation failed:&quot;, e)
+except RediroxAuthError as e:
+    print(&quot;Authentication error:&quot;, e)
+except RediroxNotFoundError as e:
+    print(&quot;Link not found:&quot;, e)
+except RediroxConnectionError as e:
+    print(&quot;Connection problem:&quot;, e)
+except RediroxAPIError as e:
+    print(f&quot;API Error ({e.status_code}):&quot;, e)</code></pre></div></section>
+<section id="resources"><h2>Resources</h2><p>Explore the package and the open-source project.</p><div class="docs-links"><a href="https://pypi.org/project/redirox/" target="_blank" rel="noopener noreferrer"><i class="fab fa-python"></i> PyPI package <i class="fas fa-arrow-up-right-from-square"></i></a><a href="https://github.com/MKishoreDev/redirox-pypi" target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i> SDK source <i class="fas fa-arrow-up-right-from-square"></i></a><a href="https://github.com/MKishoreDev/Redirox" target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i> Website source <i class="fas fa-arrow-up-right-from-square"></i></a></div></section></main></div><footer class="footer"><div class="footer-inner"><div class="footer-left"><p>Created by <strong>Kishore M</strong></p><p class="footer-tagline">Making URL sharing simple, secure, and smart</p></div><div class="footer-center"><a class="footer-link" target="_top" href="/"><i class="fas fa-link"></i> Redirox</a><a class="footer-link" href="https://github.com/MKishoreDev/redirox-pypi" target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i> SDK Repository</a></div><div class="footer-right"><p>&copy; 2026 Redirox. All rights reserved.</p></div></div></footer></div>
+    <script src="/static/docs.js" defer></script>
+</body>
+</html>

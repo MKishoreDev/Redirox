@@ -5,7 +5,7 @@ import random
 import qrcode
 import base64
 
-from datetime import datetime
+from datetime import datetime, timezone
 from flask import (
     Flask,
     request,
@@ -18,9 +18,23 @@ from flask import (
 from pymongo import MongoClient
 from werkzeug.security import generate_password_hash, check_password_hash
 
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    pass
+
 app = Flask(__name__)
+
+@app.before_request
+def handle_legacy_vercel_domain():
+    host = request.host.lower()
+    if "vercel.app" in host:
+        path = request.full_path if request.query_string else request.path
+        return redirect(f"https://redirox.pages.dev{path}", code=301)
+
 MONGO_URI = os.environ.get("MONGO_URI", "mongodb://localhost:27017")
-client = MongoClient(MONGO_URI)
+client = MongoClient(MONGO_URI, serverSelectionTimeoutMS=2000)
 db = client["Redirox"]
 try:
     db.links.create_index("code", unique=True)
@@ -62,6 +76,11 @@ def serve_logo():
 def home():
     return render_template("index.html")
 
+@app.route("/docs")
+@app.route("/docs.html")
+def docs():
+    return render_template("docs.html")
+
 @app.route("/shorten", methods=["POST"])
 def shorten():
     data = request.get_json(silent=True) or {}
@@ -96,10 +115,11 @@ def shorten():
                     "error": "Invalid expiration date format"
                 }), 400
 
+        now_utc = datetime.now(timezone.utc).replace(tzinfo=None)
         link_data = {
             "url": url,
             "code": code,
-            "created_at": datetime.utcnow(),
+            "created_at": now_utc,
             "expires_at": expiration_date,
             "visits": 0,
             "password": generate_password_hash(password)
@@ -154,16 +174,20 @@ def verify_password(code):
 
 @app.route("/info/<code>", methods=["GET"])
 def get_link_info(code):
-    doc = db.links.find_one({
-        "code": code
-    })
+    try:
+        doc = db.links.find_one({
+            "code": code
+        })
+    except Exception as e:
+        print(f"Database error: {e}")
+        abort(404)
     if not doc:
         abort(404)
     return jsonify({
         "code": code,
         "url": doc.get("url"),
         "visits": doc.get("visits", 0),
-        "created_at": doc.get("created_at").isoformat(),
+        "created_at": doc.get("created_at").isoformat() if doc.get("created_at") else None,
         "expires_at":
             doc.get("expires_at").isoformat()
             if doc.get("expires_at")
@@ -173,19 +197,27 @@ def get_link_info(code):
 
 @app.route("/<code>", methods=["GET"])
 def redirect_url(code):
-    doc = db.links.find_one({
-        "code": code
-    })
+    try:
+        doc = db.links.find_one({
+            "code": code
+        })
+    except Exception as e:
+        print(f"Database error: {e}")
+        abort(404)
     if not doc:
         abort(404)
+    now_utc = datetime.now(timezone.utc).replace(tzinfo=None)
     if (
         doc.get("expires_at")
         and
-        datetime.utcnow() > doc["expires_at"]
+        now_utc > doc["expires_at"]
     ):
-        db.links.delete_one({
-            "code": code
-        })
+        try:
+            db.links.delete_one({
+                "code": code
+            })
+        except Exception:
+            pass
         return abort(404)
     if doc.get("password"):
         password = request.args.get("password")
@@ -203,18 +235,28 @@ def redirect_url(code):
                 "password.html",
                 code=code
             )
-    db.links.update_one(
-        {"code": code},
-        {"$inc": {"visits": 1}}
-    )
+    try:
+        db.links.update_one(
+            {"code": code},
+            {"$inc": {"visits": 1}}
+        )
+    except Exception:
+        pass
     return redirect(doc["url"])
 
 @app.errorhandler(404)
 def not_found(error):
     return render_template("404.html"), 404
 
+try:
+    from workers import wsgi
+    Default = wsgi.entrypoint(app)
+except ImportError:
+    pass
+
 if __name__ == "__main__":
     app.run(
         debug=True,
         port=5000
     )
+

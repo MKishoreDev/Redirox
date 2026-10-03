@@ -212,6 +212,16 @@ async function handleShortenSubmit(e) {
         payload.expires_at = expiresAt;
     }
     
+    const shortenBtn = document.getElementById('shortenBtn') || shortenForm.querySelector('button[type="submit"]');
+    const shortenBtnIcon = document.getElementById('shortenBtnIcon');
+    const shortenBtnText = document.getElementById('shortenBtnText');
+
+    if (shortenBtn) {
+        shortenBtn.disabled = true;
+        if (shortenBtnIcon) shortenBtnIcon.className = 'fas fa-circle-notch fa-spin';
+        if (shortenBtnText) shortenBtnText.textContent = 'Shortening...';
+    }
+
     try {
         const response = await fetch(`${API_BASE}/shorten`, {
             method: 'POST',
@@ -221,18 +231,42 @@ async function handleShortenSubmit(e) {
             body: JSON.stringify(payload)
         });
         
+        let data = null;
+        const text = await response.text();
+        if (text) {
+            try {
+                data = JSON.parse(text);
+            } catch (parseErr) {
+                data = null;
+            }
+        }
+
         if (!response.ok) {
-            const error = await response.json();
-            showError(error.error || 'Failed to shorten URL');
+            const errorMsg = (data && data.error) 
+                ? data.error 
+                : (response.status === 405 
+                    ? 'Shortening is currently unavailable on this endpoint (HTTP 405).' 
+                    : `Failed to shorten link (HTTP ${response.status})`);
+            showError(errorMsg);
             return;
         }
-        
-        const data = await response.json();
+
+        if (!data || !data.short_url) {
+            showError('Invalid response received from server.');
+            return;
+        }
+
         displayResult(data);
         
     } catch (error) {
-        showError('Failed to connect to the server. Make sure the backend is running.');
+        showError('Unable to reach the service. Please check your internet connection and try again.');
         console.error(error);
+    } finally {
+        if (shortenBtn) {
+            shortenBtn.disabled = false;
+            if (shortenBtnIcon) shortenBtnIcon.className = 'fas fa-magic';
+            if (shortenBtnText) shortenBtnText.textContent = 'Shorten Link';
+        }
     }
 }
 
@@ -241,10 +275,25 @@ function displayResult(data) {
     originalUrl.value = data.url;
     
     const qrSection = document.getElementById('qrSection');
+    const qrSkeleton = document.getElementById('qrSkeleton');
     const resultLayout = document.querySelector('.result-layout');
+
     if (data.qr_code) {
-        qrCode.src = data.qr_code;
         qrSection.style.display = 'flex';
+        if (qrSkeleton) qrSkeleton.style.display = 'flex';
+        qrCode.style.display = 'none';
+
+        qrCode.onload = () => {
+            if (qrSkeleton) qrSkeleton.style.display = 'none';
+            qrCode.style.display = 'block';
+        };
+        qrCode.onerror = () => {
+            if (qrSkeleton) qrSkeleton.style.display = 'none';
+            qrCode.style.display = 'none';
+        };
+
+        qrCode.src = data.qr_code;
+
         if (downloadQrBtn) {
             downloadQrBtn.style.display = 'inline-flex';
         }
@@ -265,33 +314,62 @@ function displayResult(data) {
 }
 
 function copyToClipboard(input, button) {
-    if (navigator.clipboard && input.value) {
-        navigator.clipboard.writeText(input.value).then(() => {
-            const originalIcon = button.innerHTML;
-            button.innerHTML = '<i class="fas fa-check"></i>';
-            showToast('Copied to clipboard!');
-            setTimeout(() => {
-                button.innerHTML = originalIcon;
-            }, 2000);
-        }).catch(() => {
-            input.select();
+    const text = (input && input.value !== undefined) ? input.value : (typeof input === 'string' ? input : '');
+    copyTextToClipboard(text, button, 'Copied to clipboard!');
+}
+
+function copyTextToClipboard(text, button, successMsg = 'Copied to clipboard!') {
+    if (!text) return;
+    
+    const fallbackCopy = () => {
+        try {
+            const temp = document.createElement('textarea');
+            temp.value = text;
+            temp.style.position = 'fixed';
+            temp.style.left = '-9999px';
+            temp.style.top = '-9999px';
+            temp.setAttribute('readonly', '');
+            document.body.appendChild(temp);
+            temp.select();
+            temp.setSelectionRange(0, 99999);
             document.execCommand('copy');
-            const originalIcon = button.innerHTML;
-            button.innerHTML = '<i class="fas fa-check"></i>';
-            showToast('Copied to clipboard!');
+            document.body.removeChild(temp);
+            return true;
+        } catch (e) {
+            console.error('Fallback copy failed:', e);
+            return false;
+        }
+    };
+
+    const triggerSuccess = () => {
+        if (button) {
+            const originalHtml = button.innerHTML;
+            button.innerHTML = '<i class="fas fa-check" style="color:#10b981;"></i>';
+            button.classList.add('copied');
             setTimeout(() => {
-                button.innerHTML = originalIcon;
+                button.innerHTML = originalHtml;
+                button.classList.remove('copied');
             }, 2000);
-        });
+        }
+        showToast(successMsg);
+    };
+
+    if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(text)
+            .then(triggerSuccess)
+            .catch(() => {
+                if (fallbackCopy()) {
+                    triggerSuccess();
+                } else {
+                    showToast('Failed to copy');
+                }
+            });
     } else {
-        input.select();
-        document.execCommand('copy');
-        const originalIcon = button.innerHTML;
-        button.innerHTML = '<i class="fas fa-check"></i>';
-        showToast('Copied to clipboard!');
-        setTimeout(() => {
-            button.innerHTML = originalIcon;
-        }, 2000);
+        if (fallbackCopy()) {
+            triggerSuccess();
+        } else {
+            showToast('Failed to copy');
+        }
     }
 }
 
@@ -375,12 +453,41 @@ function togglePasswordVisibility() {
 themeToggle.addEventListener('click', toggleTheme);
 passwordToggleBtn.addEventListener('click', togglePasswordVisibility);
 shortenForm.addEventListener('submit', handleShortenSubmit);
-copyBtn.addEventListener('click', () => copyToClipboard(shortUrlInput, copyBtn));
-copyOriginalBtn.addEventListener('click', () => copyToClipboard(originalUrl, copyOriginalBtn));
-shareBtn.addEventListener('click', shareLink);
-if (downloadQrBtn) {
-    downloadQrBtn.addEventListener('click', downloadQrCode);
+if (copyBtn) copyBtn.addEventListener('click', () => copyToClipboard(shortUrlInput, copyBtn));
+if (copyOriginalBtn) copyOriginalBtn.addEventListener('click', () => copyToClipboard(originalUrl, copyOriginalBtn));
+if (shareBtn) shareBtn.addEventListener('click', shareLink);
+if (downloadQrBtn) downloadQrBtn.addEventListener('click', downloadQrCode);
+if (newLinkBtn) newLinkBtn.addEventListener('click', resetForm);
+
+// SDK pip install copy button handler
+const copyPipBtn = document.getElementById('copyPipBtn');
+if (copyPipBtn) {
+    copyPipBtn.addEventListener('click', () => {
+        const cmd = document.getElementById('pipInstallText')?.textContent?.trim() || 'pip install redirox';
+        copyTextToClipboard(cmd, copyPipBtn, 'Copied pip command!');
+    });
 }
-newLinkBtn.addEventListener('click', resetForm);
+
+// Support any other .copy-install-btn
+document.querySelectorAll('.copy-install-btn').forEach(btn => {
+    if (btn !== copyPipBtn) {
+        btn.addEventListener('click', () => {
+            const container = btn.closest('.sdk-install-box');
+            const cmd = container ? container.querySelector('code')?.textContent?.trim() : 'pip install redirox';
+            copyTextToClipboard(cmd || 'pip install redirox', btn, 'Copied pip command!');
+        });
+    }
+});
+
+// Clickable code block to copy
+const pipCodeEl = document.getElementById('pipInstallText');
+if (pipCodeEl) {
+    pipCodeEl.style.cursor = 'pointer';
+    pipCodeEl.title = 'Click to copy';
+    pipCodeEl.addEventListener('click', () => {
+        const cmd = pipCodeEl.textContent?.trim() || 'pip install redirox';
+        copyTextToClipboard(cmd, copyPipBtn, 'Copied pip command!');
+    });
+}
 
 initTheme();

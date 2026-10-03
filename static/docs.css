@@ -1,0 +1,280 @@
+/* ==========================================================================
+   Redirox - Documentation Stylesheet
+   Clean, Readable, Developer-First
+   ========================================================================== */
+
+.docs-shell {
+    display: flex;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2.5rem 1.5rem 5rem;
+    gap: 3rem;
+}
+
+.docs-nav {
+    width: 240px;
+    flex-shrink: 0;
+    position: sticky;
+    top: 5rem;
+    align-self: flex-start;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.docs-nav-title {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-tertiary);
+    margin-bottom: 0.75rem;
+    padding-left: 0.75rem;
+}
+
+.docs-nav a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    padding: 0.45rem 0.75rem;
+    border-radius: var(--radius-sm);
+    font-size: 0.875rem;
+    font-weight: 500;
+    transition: var(--transition);
+    border-left: 2px solid transparent;
+}
+
+.docs-nav a:hover {
+    color: var(--text-primary);
+    background: var(--bg-secondary);
+}
+
+.docs-nav a.active {
+    color: var(--accent);
+    background: var(--accent-light);
+    border-left-color: var(--accent);
+    font-weight: 600;
+}
+
+.docs-main {
+    flex: 1;
+    min-width: 0;
+    max-width: 800px;
+}
+
+.docs-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+    background: var(--accent-light);
+    padding: 0.25rem 0.65rem;
+    border-radius: var(--radius-full);
+    margin-bottom: 1rem;
+}
+
+.docs-main h1 {
+    font-size: 2.25rem;
+    font-weight: 800;
+    letter-spacing: -0.035em;
+    color: var(--text-primary);
+    margin-bottom: 0.75rem;
+    line-height: 1.2;
+}
+
+.docs-intro {
+    font-size: 1.125rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin-bottom: 2rem;
+}
+
+.docs-hero-actions {
+    display: flex;
+    gap: 0.75rem;
+    margin-bottom: 3rem;
+}
+
+.docs-main section {
+    margin-bottom: 3rem;
+    padding-top: 1rem;
+}
+
+.docs-main h2 {
+    font-size: 1.375rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--text-primary);
+    margin-bottom: 0.75rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--border);
+}
+
+.docs-main p {
+    color: var(--text-secondary);
+    line-height: 1.65;
+    margin-bottom: 1rem;
+    font-size: 0.9375rem;
+}
+
+.docs-main code:not(pre code) {
+    font-family: var(--font-mono);
+    background: var(--bg-tertiary);
+    color: var(--text-primary);
+    padding: 0.2rem 0.4rem;
+    border-radius: 4px;
+    font-size: 0.85em;
+    border: 1px solid var(--border);
+}
+
+/* Code Block - Linux Terminal Window */
+.docs-code {
+    background: #0d1117;
+    border: 1px solid #30363d;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    margin: 1.25rem 0 1.75rem;
+    box-shadow: var(--shadow-md);
+}
+
+.docs-code-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.65rem 1rem;
+    background: #161b22;
+    color: #8b949e;
+    font-size: 0.75rem;
+    font-family: var(--font-mono);
+    font-weight: 600;
+    border-bottom: 1px solid #30363d;
+    position: relative;
+}
+
+.docs-code-head::before {
+    content: '';
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: #ff5f56;
+    border: 1px solid #e0443e;
+    box-shadow: 18px 0 0 -1px #dea123, 18px 0 0 0 #ffbd2e, 36px 0 0 -1px #1aab29, 36px 0 0 0 #27c93f;
+    margin-right: 48px;
+    flex-shrink: 0;
+}
+
+.docs-code-head span {
+    margin-right: auto;
+    color: #c9d1d9;
+}
+
+.docs-copy {
+    background: #21262d;
+    border: 1px solid #30363d;
+    color: #c9d1d9;
+    font-size: 0.75rem;
+    font-weight: 500;
+    padding: 0.25rem 0.65rem;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    transition: var(--transition);
+}
+
+.docs-copy:hover {
+    background: #30363d;
+    color: #ffffff;
+    border-color: #8b949e;
+}
+
+.docs-code pre {
+    padding: 1.25rem 1rem;
+    margin: 0;
+    overflow-x: auto;
+    color: #e6edf3;
+    background: #0d1117;
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    line-height: 1.65;
+}
+
+/* Callout Box */
+.docs-callout {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--accent);
+    padding: 1rem 1.25rem;
+    border-radius: var(--radius-md);
+    margin: 1.25rem 0 1.75rem;
+}
+
+.docs-callout p {
+    margin: 0;
+    font-size: 0.875rem;
+    color: var(--text-primary);
+}
+
+/* Tables */
+.docs-table-wrap {
+    overflow-x: auto;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    margin: 1.25rem 0 1.75rem;
+}
+
+.docs-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.875rem;
+}
+
+.docs-table th,
+.docs-table td {
+    padding: 0.75rem 1rem;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+}
+
+.docs-table th {
+    background: var(--bg-secondary);
+    color: var(--text-secondary);
+    font-weight: 600;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.docs-table tr:last-child td {
+    border-bottom: none;
+}
+
+.docs-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+}
+
+.docs-links a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+@media (max-width: 800px) {
+    .docs-shell {
+        flex-direction: column;
+        gap: 1.5rem;
+        padding: 2rem 1rem 4rem;
+    }
+
+    .docs-nav {
+        display: none;
+    }
+}
